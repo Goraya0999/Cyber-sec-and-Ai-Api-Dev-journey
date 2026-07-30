@@ -1,0 +1,11 @@
+also explore certificate and related skill also added 
+
+name: Muhammad Shafiq Goraya
+Bs Software engineering studnt of goverment college and university faisalabad in great interest in cybersecurity .aim to be professional in it . 
+github-->https://github.com/Goraya0999
+linkden-->https://www.linkedin.com/in/muhammad-shafiq-goraya-3bb183377/
+gmail --> bytecrest03@gmail.com
+computer language --> python, basic c++ , javascript , fastapi
+database -->sql ,postgresql
+skill --> scripting , coding ,reacon , vunerability assessment ,networking ,linux,
+tool --> nmap,wireshark,burpsuite,metasploitable framework ,docker ,
