@@ -6,19 +6,7 @@ Kali Linux includes a wide range of system protection tools designed to help cyb
 
 By combining these technologies, security practitioners can monitor network activity, identify malicious behavior, block unauthorized access, and maintain the integrity of their systems.
 
----
 
-# Learning Objectives
-
-After completing this guide, you will be able to:
-
-* Identify system protection tools available in Kali Linux.
-* Understand the purpose of IDS and IPS solutions.
-* Configure and utilize firewall technologies.
-* Detect malware and rootkits using antivirus tools.
-* Implement a layered security approach for system protection.
-
----
 
 # Importance of System Protection
 

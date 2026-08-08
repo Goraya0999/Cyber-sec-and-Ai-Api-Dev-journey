@@ -1,25 +1,28 @@
-from pydantic import BaseModel, Field 
-from random import randint
 from enum import Enum
-from typing import Optional
-
-class Status(Enum):
-    PLACED = "placed"
-    PROCESSING = "processing"
-    SHIPPED = "shipped"
-    IN_TRANSIT = "in transit"
-    DELIVERED = "delivered"
-    RETURNED = "returned"
+from pydantic import BaseModel, Field
+from datetime import datetime
 
 
-class Shipment(BaseModel):
-    content: str = Field(max_length=50)
-    weight: float = Field(..., ge=1, le=25)
-    status: Status =Field(default=Status.PLACED)
-    destination:int | None = Field(default=randint(1100,119999))
+from databasee.models import ShipmentStatus
 
 
-class patched(BaseModel):
-    content: str | None = None
-    weight: float | None = Field(None, ge=1, le=25)
-    status: str | None = None
+class BaseShipment(BaseModel):
+    content: str
+    weight: float = Field(le=25)
+    destination: int =None
+
+
+class ShipmentRead(BaseShipment):
+    status: ShipmentStatus
+    estimated_delivery:datetime
+
+class ShipmentCreate(BaseShipment):
+    pass
+    
+
+class ShipmentUpdate(BaseModel):
+    content: str | None = Field(default=None)
+    weight: float | None = Field(default=None, le=25)
+    destination: int | None = Field(default=None)
+    status: ShipmentStatus | None = Field(default=None)
+    estimated_delivery:datetime | None = Field(default=None)

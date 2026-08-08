@@ -1,0 +1,369 @@
+# Why API Security Matters
+
+## Introduction
+
+**API (Application Programming Interface)** is a set of rules that allows different software applications to communicate with each other.
+
+Think of an API as a **messenger**:
+
+* Your application sends a request.
+* The API delivers the request to another system.
+* The API returns the response.
+
+Because almost every modern application uses APIs, **API security has become one of the most important areas of cybersecurity.**
+
+---
+
+# What Is an API?
+
+An **API (Application Programming Interface)** allows two applications or systems to exchange data and perform actions without exposing their internal implementation.
+
+### Simple Examples
+
+| Action                              | API Communication                                            |
+| ----------------------------------- | ------------------------------------------------------------ |
+| Searching directions on Google Maps | Google Maps communicates with mapping services through APIs. |
+| Booking an Uber or Lyft             | The mobile app communicates with company servers using APIs. |
+| Sending money through a banking app | Banking systems exchange data securely through APIs.         |
+| Comparing airline ticket prices     | Travel websites retrieve data from airline APIs.             |
+
+Without APIs, most online services would not work together.
+
+---
+
+# APIs Power the Modern Internet
+
+Today, APIs are used in almost every digital service.
+
+Examples include:
+
+* 🌐 Websites
+* 📱 Mobile applications
+* 🏦 Banking systems
+* 🛒 E-commerce platforms
+* ☁️ Cloud services
+* 🎮 Online games
+* 🚗 Connected vehicles
+* 🤖 AI applications
+
+APIs act as the **bridge** between users and backend systems.
+
+---
+
+# Why API Security Is Important
+
+Since APIs connect directly to important systems, attackers often target them.
+
+A vulnerable API may expose:
+
+* Personal information
+* Credit card data
+* Banking transactions
+* Medical records
+* Business secrets
+* Customer databases
+
+A single insecure API can lead to a massive data breach.
+
+---
+
+# The Perfect API Storm
+
+Several factors have made APIs one of the biggest cybersecurity concerns.
+
+## 1. APIs Generate Most Internet Traffic
+
+Studies have shown that approximately **83% of internet traffic** is API-related.
+
+This demonstrates how essential APIs have become for modern applications.
+
+---
+
+## 2. APIs Are a Top Attack Target
+
+Cybersecurity experts predicted that **API attacks would become one of the most common attack methods**, and that prediction has become reality.
+
+Attackers increasingly focus on APIs because they often provide direct access to valuable data.
+
+---
+
+## 3. API Security Testing Is Often Ignored
+
+Many organizations test whether their APIs:
+
+* Work correctly
+* Perform well
+* Return correct data
+
+However, **security testing is often neglected**.
+
+This leaves many vulnerabilities undiscovered until attackers exploit them.
+
+---
+
+# What Attackers Want
+
+Attackers target APIs to steal valuable information such as:
+
+* 💳 Credit card numbers
+* 👤 Personal information
+* 💰 Financial data
+* 📄 Confidential business information
+* 📂 Customer records
+* 🔑 Authentication tokens
+
+They may also perform:
+
+* Fraud
+* Account takeover
+* Data scraping
+* Unauthorized transactions
+
+---
+
+# Why APIs Are Attractive Targets
+
+APIs connect users directly to backend systems.
+
+```text
+User
+   │
+   ▼
+Website / Mobile App
+   │
+   ▼
+API
+   │
+   ▼
+Database
+Payment System
+Authentication Server
+Business Logic
+```
+
+If an API contains a security flaw, attackers may gain direct access to backend resources.
+
+---
+
+# APIs Are Not Hidden
+
+Many developers believe APIs are difficult to discover.
+
+This is **not true**.
+
+Using browser developer tools (Inspect → Network), anyone can view:
+
+* API endpoints
+* Request URLs
+* Request headers
+* Request bodies
+* Response data
+
+Attackers use these tools to understand how an application communicates with its backend.
+
+---
+
+# How API Attacks Usually Work
+
+A common API attack follows these steps:
+
+```text
+Create an account
+        │
+        ▼
+Use the application normally
+        │
+        ▼
+Observe API requests
+        │
+        ▼
+Find API endpoints
+        │
+        ▼
+Send custom API requests directly
+        │
+        ▼
+Exploit vulnerabilities
+```
+
+Instead of interacting through the application's user interface, attackers communicate directly with the API.
+
+---
+
+# Why Bypassing the User Interface Is Dangerous
+
+The user interface (UI) limits what users can do.
+
+For example:
+
+* Available buttons
+* Allowed actions
+* Visible information
+
+The API, however, receives requests directly.
+
+Attackers can:
+
+* Modify request parameters
+* Change user IDs
+* Send unexpected values
+* Repeat requests rapidly
+* Access hidden functionality
+
+If the backend does not properly validate these requests, the API becomes vulnerable.
+
+---
+
+# Common API Weaknesses
+
+Some common security problems include:
+
+* Over-permissioned APIs
+* Missing authorization checks
+* Poor authentication
+* Business logic flaws
+* Excessive data exposure
+* Weak input validation
+
+These weaknesses can allow attackers to perform unauthorized actions.
+
+---
+
+# Traditional Cyber Attack vs API Attack
+
+## Traditional Attack
+
+```text
+Reconnaissance
+      │
+      ▼
+Initial Access
+      │
+      ▼
+Privilege Escalation
+      │
+      ▼
+Lateral Movement
+      │
+      ▼
+Data Theft
+```
+
+This process usually requires significant time and expertise.
+
+---
+
+## API Attack
+
+```text
+Find Vulnerable API
+        │
+        ▼
+Exploit Vulnerability
+        │
+        ▼
+Data Breach
+```
+
+API attacks are often much simpler and faster.
+
+---
+
+# Real-World API Security Incidents
+
+Several major organizations have experienced API-related breaches.
+
+Examples include:
+
+* Large telecommunications companies
+* Financial institutions
+* Healthcare organizations
+* Technology companies
+
+In many cases, millions of customer records were exposed because of insecure APIs.
+
+---
+
+# Regulations That Require API Security
+
+Many security and privacy standards now include API protection requirements.
+
+Some important regulations include:
+
+| Regulation                         | Purpose                                 |
+| ---------------------------------- | --------------------------------------- |
+| PCI DSS 4.0                        | Secure payment systems and APIs         |
+| GDPR                               | Protect personal data                   |
+| HIPAA                              | Protect healthcare information          |
+| SEC Security Rules                 | Report cybersecurity risks and breaches |
+| FedRAMP                            | Secure cloud services for government    |
+| Automotive Cybersecurity Standards | Protect connected vehicles              |
+
+Organizations must ensure their APIs are secure to comply with these standards.
+
+---
+
+# Best Practices for API Security
+
+Organizations should:
+
+* Perform regular API security testing
+* Use strong authentication
+* Implement proper authorization
+* Validate all user input
+* Encrypt sensitive data
+* Monitor API activity continuously
+* Apply the principle of least privilege
+* Fix vulnerabilities quickly
+
+Continuous security testing is essential because APIs change frequently.
+
+
+
+# Interview Questions
+
+## 1. What is an API?
+
+An API (Application Programming Interface) enables different software applications to communicate and exchange data.
+
+---
+
+## 2. Why are APIs attractive targets for attackers?
+
+Because APIs often provide direct access to sensitive data, business logic, databases, and backend services.
+
+---
+
+## 3. Why are APIs easier to attack than traditional applications?
+
+Attackers can bypass the user interface and interact directly with API endpoints using custom requests.
+
+---
+
+## 4. Can APIs be hidden from attackers?
+
+No. API requests can usually be observed using browser developer tools or network monitoring tools.
+
+---
+
+## 5. Name some regulations that require API security.
+
+* PCI DSS
+* GDPR
+* HIPAA
+* FedRAMP
+* SEC Security Rules
+
+---
+
+## 6. What are common API vulnerabilities?
+
+* Broken authentication
+* Broken authorization
+* Business logic flaws
+* Excessive data exposure
+* Poor input validation
+* Over-permissioned APIs
+
+---
+

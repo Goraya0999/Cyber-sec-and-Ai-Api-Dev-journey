@@ -1,99 +1,94 @@
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status,Depends
 from scalar_fastapi import get_scalar_api_reference
+from database import Database
+from schema import ShipmentCreate, ShipmentRead, ShipmentUpdate,ShipmentStatus
+from contextlib import asynccontextmanager
+#from rich import print,panel 
+from databasee.session import create_db_table
+from databasee.session import Sessiondep
+from databasee.models import Shipment
+from datetime import datetime,timedelta
+@asynccontextmanager
+async def lifespan_handler(app:FastAPI):
+    print("server started ...")
+    create_db_table()
+    yield
+    print("...stopped!")
 
-from schema import Shipment, patched
+app = FastAPI(lifespan=lifespan_handler)
+db=Database()
 
-app = FastAPI()
-
-
-shipments = {
-    12701: {"weight": 1.2, "content": "glassware", "status": "placed"},
-    12702: {"weight": 2.3, "content": "books", "status": "shipped"},
-    12703: {"weight": 1.5, "content": "electronics", "status": "delivered"},
-    12704: {"weight": 3.5, "content": "furniture", "status": "in transit"},
-    12705: {"weight": 2.0, "content": "clothing", "status": "returned"},
-    12706: {"weight": 4.0, "content": "appliances", "status": "processing"},
-    12707: {"weight": 1.8, "content": "toys", "status": "placed"},
-}
+### Shipments datastore as dict
+# shipments = {
+#     12701: {"weight": 8.2, "content": "aluminum sheets", "status": "placed", "destination": 11002},
+#     12702: {"weight": 14.7, "content": "steel rods", "status": "shipped", "destination": 11003},
+#     12703: {"weight": 11.4, "content": "copper wires", "status": "delivered", "destination": 11002},
+#     12704: {"weight": 17.8, "content": "iron plates", "status": "in transit", "destination": 11005},
+#     12705: {"weight": 10.3, "content": "brass fittings", "status": "returned", "destination": 11008},
+# }
 
 
-# -------------------------------
-# Get Shipment
-# -------------------------------
-@app.get("/shipment")
-def get_shipment(id: int):
-
-    if id not in shipments:
+###  a shipment by id
+@app.get("/shipment", response_model=ShipmentRead)
+def get_shipment(id: int,session:Session=Sessiondep):
+    # Check for shipment with given id
+    shipment=session.get(Shipment,id)
+    if shipment is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Shipment not found."
+            detail="Given id doesn't exist!",
         )
-
-    return shipments[id]
-
-
-# -------------------------------
-# Create Shipment
-# -------------------------------
-@app.post("/shipment",status_code=status.HTTP_201_CREATED)
-def create_shipment(item: Shipment):
-
-    new_id = max(shipments.keys()) + 1
-
-    shipments[new_id] = item.model_dump()
-
-    return {
-        "message": "Shipment created successfully.",
-        "id": new_id
-    }
-
-
-# -------------------------------
-# Replace Shipment (PUT)
-# -------------------------------
-@app.put("/shipment")
-def update_shipment(id: int, item: Shipment):
-
-    if id not in shipments:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Shipment not found."
-        )
-
-    shipments[id] = item.model_dump()
-
-    return shipments[id]
-
-
-# -------------------------------
-# Partially Update Shipment (PATCH)
-# -------------------------------
-@app.patch("/shipment")
-def patch_shipment(id: int, item: patched):
-
-    if id not in shipments:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Shipment not found."
-        )
-
-    # Existing shipment
-    shipment = shipments[id]
-
-    # Only the fields provided by the client
-    updated_fields = item.model_dump(exclude_unset=True)
-
-    # Merge with existing data
-    shipment.update(updated_fields)
-
-    shipments[id] = shipment
 
     return shipment
 
 
-# -------------------------------
-# Scalar Documentation
-# -------------------------------
+### Create a new shipment with content and weight
+@app.post("/shipment", response_model=None)
+def submit_shipment(shipment: ShipmentCreate,session:Sessiondep) -> dict[str, int]:
+    new_shipment=Shipment(
+        **shipment.model_dump(),
+        status=ShipmentStatus.placed,
+        estimated_delivery=datetime.now() + timedelta(days=3)
+    )
+    session.add(new_shipment)
+    session.commit()
+    session.refresh(new_shipment)
+    # Return id for later use
+    return {"id": new_shipment.id}
+
+
+### Update fields of a shipment
+@app.patch("/shipment", response_model=ShipmentRead)
+def update_shipment(id: int, shipment_update: ShipmentUpdate,session:Sessiondep):
+    # Update data with given fields
+    update=shipment_update.model_dump(exclude_none=True)
+    if not update:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No data provided"
+        )
+    shipment=session.get(Shipment,id)
+    shipment.sqlmodel_update(update)
+    session.add(shipment)
+    session.commit()
+    session.refresh(shipment)
+    return shipment
+
+
+### Delete a shipment by id
+@app.delete("/shipment")
+def delete_shipment(id: int,session:Sessiondep) -> dict[str, str]:
+    # Remove from datastore
+    # db.delete(id)
+    session.delete(
+        session.get(Shipment,id)
+    )
+    session.commit()
+
+    return {"detail": f"Shipment with id #{id} is deleted!"}
+
+
+### Scalar API Documentation
 @app.get("/scalar", include_in_schema=False)
 def get_scalar_docs():
     return get_scalar_api_reference(
