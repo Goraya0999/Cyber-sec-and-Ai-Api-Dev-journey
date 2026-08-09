@@ -1,0 +1,31 @@
+# Web framework
+fastapi
+uvicorn[standard]
+
+# Database
+sqlalchemy[asyncio]
+asyncpg
+alembic
+
+# Config
+pydantic-settings
+python-dotenv
+email-validator
+
+# Security
+argon2-cffi
+PyJWT
+
+# Redis / rate limiting / lockout
+redis
+slowapi
+
+# Docs
+scalar-fastapi
+
+# Testing
+pytest
+pytest-asyncio
+httpx
+aiosqlite
+fakeredis
